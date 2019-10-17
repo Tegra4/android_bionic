@@ -2876,13 +2876,6 @@ bool soinfo::relocate(const VersionTracker& version_tracker, ElfRelIteratorT&& r
         TRACE_TYPE(RELO, "RELO ABS %08x <- %08x %s", reloc, sym_addr, sym_name);
         *reinterpret_cast<ElfW(Addr)*>(reloc) += sym_addr;
         break;
-      case R_ARM_REL32:
-        count_relocation(kRelocRelative);
-        MARK(rel->r_offset);
-        TRACE_TYPE(RELO, "RELO REL32 %08x <- %08x - %08x %s",
-                   reloc, sym_addr, rel->r_offset, sym_name);
-        *reinterpret_cast<ElfW(Addr)*>(reloc) += sym_addr - rel->r_offset;
-        break;
       case R_ARM_COPY:
         /*
          * ET_EXEC is not supported so this should not happen.
